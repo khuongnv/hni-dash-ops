@@ -1,0 +1,529 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HniDashOps.API</name>
+    </assembly>
+    <members>
+        <member name="T:HniDashOps.API.Controllers.AuthController">
+            <summary>
+            Controller for authentication and authorization operations
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.AuthController.Login(HniDashOps.API.Controllers.LoginRequest)">
+            <summary>
+            Authenticates a user with username/email and password
+            </summary>
+            <param name="request">Login request containing credentials</param>
+            <returns>Authentication result with user information</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.AuthController.Register(HniDashOps.API.Controllers.RegisterRequest)">
+            <summary>
+            Registers a new user
+            </summary>
+            <param name="request">Registration request containing user information</param>
+            <returns>Registration result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.AuthController.DemoLogin(HniDashOps.API.Controllers.DemoLoginRequest)">
+            <summary>
+            Demo login endpoint - authenticates user with username only (no password required)
+            WARNING: This endpoint is for demonstration purposes only and should be removed in production
+            </summary>
+            <param name="request">Demo login request containing only username</param>
+            <returns>Authentication result with user information</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.AuthController.ChangePassword(HniDashOps.API.Controllers.ChangePasswordRequest)">
+            <summary>
+            Changes a user's password
+            </summary>
+            <param name="request">Password change request</param>
+            <returns>Password change result</returns>
+        </member>
+        <member name="T:HniDashOps.API.Controllers.CategoriesController">
+            <summary>
+            Controller for managing categories
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategories">
+            <summary>
+            Gets all categories
+            </summary>
+            <returns>List of categories</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategory(System.Int32)">
+            <summary>
+            Gets a specific category by ID
+            </summary>
+            <param name="id">Category ID</param>
+            <returns>Category details</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategoryByCode(System.String)">
+            <summary>
+            Gets a category by code
+            </summary>
+            <param name="code">Category code</param>
+            <returns>Category details</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.CreateCategory(HniDashOps.API.DTOs.CreateCategoryRequest)">
+            <summary>
+            Creates a new category
+            </summary>
+            <param name="request">Category creation request</param>
+            <returns>Created category</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.UpdateCategory(System.Int32,HniDashOps.API.DTOs.UpdateCategoryRequest)">
+            <summary>
+            Updates an existing category
+            </summary>
+            <param name="id">Category ID</param>
+            <param name="request">Category update request</param>
+            <returns>Updated category</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.DeleteCategory(System.Int32)">
+            <summary>
+            Deletes a category
+            </summary>
+            <param name="id">Category ID</param>
+            <returns>Deletion result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetRootCategories">
+            <summary>
+            Gets root categories (categories without parent)
+            </summary>
+            <returns>List of root categories</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetChildCategories(System.Int32)">
+            <summary>
+            Gets child categories of a specific parent
+            </summary>
+            <param name="parentId">Parent category ID</param>
+            <returns>List of child categories</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategoryHierarchy(System.Int32)">
+            <summary>
+            Gets category hierarchy (category and all its children)
+            </summary>
+            <param name="id">Category ID</param>
+            <returns>Category hierarchy</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategoryTree">
+            <summary>
+            Gets category tree (visible categories only)
+            </summary>
+            <returns>Category tree</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategoryPath(System.Int32)">
+            <summary>
+            Gets category path (breadcrumb)
+            </summary>
+            <param name="id">Category ID</param>
+            <returns>Category path</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.ReorderCategories(HniDashOps.API.DTOs.ReorderCategoriesRequest)">
+            <summary>
+            Reorders categories
+            </summary>
+            <param name="request">Reorder request</param>
+            <returns>Reorder result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.MoveCategoryUp(System.Int32)">
+            <summary>
+            Moves a category up in order
+            </summary>
+            <param name="id">Category ID</param>
+            <returns>Move result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.MoveCategoryDown(System.Int32)">
+            <summary>
+            Moves a category down in order
+            </summary>
+            <param name="id">Category ID</param>
+            <returns>Move result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.ToggleCategoryVisibility(System.Int32)">
+            <summary>
+            Toggles category visibility
+            </summary>
+            <param name="id">Category ID</param>
+            <returns>Toggle result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.SearchCategories(System.String)">
+            <summary>
+            Searches categories by term
+            </summary>
+            <param name="searchTerm">Search term</param>
+            <returns>Matching categories</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategoriesByLevel(System.Int32)">
+            <summary>
+            Gets categories by level
+            </summary>
+            <param name="level">Category level</param>
+            <returns>Categories at the specified level</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategoriesByType(System.String)">
+            <summary>
+            Gets categories by type
+            </summary>
+            <param name="type">Category type</param>
+            <returns>Categories of the specified type</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.GetCategoryByMapId(System.String)">
+            <summary>
+            Gets a category by MapId
+            </summary>
+            <param name="mapId">Map ID</param>
+            <returns>Category details</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.CheckCodeUnique(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Checks if a code is unique
+            </summary>
+            <param name="code">Category code</param>
+            <param name="excludeId">Category ID to exclude from check</param>
+            <returns>Uniqueness result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.CategoriesController.CheckMapIdUnique(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Checks if a MapId is unique
+            </summary>
+            <param name="mapId">Map ID</param>
+            <param name="excludeId">Category ID to exclude from check</param>
+            <returns>Uniqueness result</returns>
+        </member>
+        <member name="T:HniDashOps.API.Controllers.DepartmentsController">
+            <summary>
+            Controller for managing departments
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetDepartments">
+            <summary>
+            Gets all departments
+            </summary>
+            <returns>List of departments</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetDepartment(System.Int32)">
+            <summary>
+            Gets a specific department by ID
+            </summary>
+            <param name="id">Department ID</param>
+            <returns>Department details</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetDepartmentByCode(System.String)">
+            <summary>
+            Gets department by code
+            </summary>
+            <param name="code">Department code</param>
+            <returns>Department details</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.CreateDepartment(HniDashOps.API.DTOs.CreateDepartmentRequest)">
+            <summary>
+            Creates a new department
+            </summary>
+            <param name="request">Department creation request</param>
+            <returns>Created department</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.UpdateDepartment(System.Int32,HniDashOps.API.DTOs.UpdateDepartmentRequest)">
+            <summary>
+            Updates an existing department
+            </summary>
+            <param name="id">Department ID</param>
+            <param name="request">Department update request</param>
+            <returns>Updated department</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.DeleteDepartment(System.Int32)">
+            <summary>
+            Deletes a department
+            </summary>
+            <param name="id">Department ID</param>
+            <returns>Deletion result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetRootDepartments">
+            <summary>
+            Gets root departments (departments without parent)
+            </summary>
+            <returns>List of root departments</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetChildDepartments(System.Int32)">
+            <summary>
+            Gets child departments of a specific parent
+            </summary>
+            <param name="parentId">Parent department ID</param>
+            <returns>List of child departments</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetDepartmentHierarchy(System.Int32)">
+            <summary>
+            Gets department hierarchy (department and all its children)
+            </summary>
+            <param name="id">Department ID</param>
+            <returns>Department hierarchy</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetDepartmentUsers(System.Int32)">
+            <summary>
+            Gets users in a specific department
+            </summary>
+            <param name="id">Department ID</param>
+            <returns>List of users in the department</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.AssignUserToDepartment(HniDashOps.API.DTOs.AssignUserToDepartmentRequest)">
+            <summary>
+            Assigns a user to a department
+            </summary>
+            <param name="request">Assignment request</param>
+            <returns>Assignment result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.RemoveUserFromDepartment(System.Int32)">
+            <summary>
+            Removes a user from their department
+            </summary>
+            <param name="userId">User ID</param>
+            <returns>Removal result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.SearchDepartments(System.String)">
+            <summary>
+            Searches departments by term
+            </summary>
+            <param name="searchTerm">Search term</param>
+            <returns>Matching departments</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.DepartmentsController.GetDepartmentsByLevel(System.Int32)">
+            <summary>
+            Gets departments by level
+            </summary>
+            <param name="level">Department level</param>
+            <returns>Departments at the specified level</returns>
+        </member>
+        <member name="T:HniDashOps.API.Controllers.MenusController">
+            <summary>
+            Controller for managing menus
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetMenus">
+            <summary>
+            Gets all menus
+            </summary>
+            <returns>List of menus</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetMenu(System.Int32)">
+            <summary>
+            Gets a specific menu by ID
+            </summary>
+            <param name="id">Menu ID</param>
+            <returns>Menu details</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.CreateMenu(HniDashOps.API.DTOs.CreateMenuRequest)">
+            <summary>
+            Creates a new menu
+            </summary>
+            <param name="request">Menu creation request</param>
+            <returns>Created menu</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.UpdateMenu(System.Int32,HniDashOps.API.DTOs.UpdateMenuRequest)">
+            <summary>
+            Updates an existing menu
+            </summary>
+            <param name="id">Menu ID</param>
+            <param name="request">Menu update request</param>
+            <returns>Updated menu</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.DeleteMenu(System.Int32)">
+            <summary>
+            Deletes a menu
+            </summary>
+            <param name="id">Menu ID</param>
+            <returns>Deletion result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetRootMenus">
+            <summary>
+            Gets root menus (menus without parent)
+            </summary>
+            <returns>List of root menus</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetChildMenus(System.Int32)">
+            <summary>
+            Gets child menus of a specific parent
+            </summary>
+            <param name="parentId">Parent menu ID</param>
+            <returns>List of child menus</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetMenuHierarchy(System.Int32)">
+            <summary>
+            Gets menu hierarchy (menu and all its children)
+            </summary>
+            <param name="id">Menu ID</param>
+            <returns>Menu hierarchy</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetNavigationMenu">
+            <summary>
+            Gets visible menus for navigation
+            </summary>
+            <returns>List of visible menus</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetBreadcrumb(System.Int32)">
+            <summary>
+            Gets breadcrumb for a specific menu
+            </summary>
+            <param name="id">Menu ID</param>
+            <returns>Breadcrumb path</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.ReorderMenus(HniDashOps.API.DTOs.ReorderMenusRequest)">
+            <summary>
+            Reorders menus
+            </summary>
+            <param name="request">Reorder request</param>
+            <returns>Reorder result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.MoveMenuUp(System.Int32)">
+            <summary>
+            Moves a menu up in order
+            </summary>
+            <param name="id">Menu ID</param>
+            <returns>Move result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.MoveMenuDown(System.Int32)">
+            <summary>
+            Moves a menu down in order
+            </summary>
+            <param name="id">Menu ID</param>
+            <returns>Move result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.ToggleMenuVisibility(System.Int32)">
+            <summary>
+            Toggles menu visibility
+            </summary>
+            <param name="id">Menu ID</param>
+            <returns>Toggle result</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.SearchMenus(System.String)">
+            <summary>
+            Searches menus by term
+            </summary>
+            <param name="searchTerm">Search term</param>
+            <returns>Matching menus</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.MenusController.GetMenusByLevel(System.Int32)">
+            <summary>
+            Gets menus by level
+            </summary>
+            <param name="level">Menu level</param>
+            <returns>Menus at the specified level</returns>
+        </member>
+        <member name="T:HniDashOps.API.Controllers.SeedController">
+            <summary>
+            Controller for seeding initial data into the database
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SeedController.SeedDatabase">
+            <summary>
+            Seeds the database with initial data (roles, permissions, users, etc.)
+            </summary>
+            <returns>Result of the seeding operation</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SeedController.GetSeedStats">
+            <summary>
+            Gets the current seed data statistics
+            </summary>
+            <returns>Current database statistics</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SeedController.ClearSeedData">
+            <summary>
+            Clears all seed data from the database (DANGEROUS - for development only)
+            </summary>
+            <returns>Result of the clearing operation</returns>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetNotifications(System.Int32,System.Int32,System.String)">
+            <summary>
+            Lấy danh sách thông báo hệ thống
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetNotification(System.Int32)">
+            <summary>
+            Lấy thông báo theo ID
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.CreateNotification(HniDashOps.API.DTOs.CreateSystemNotificationRequest)">
+            <summary>
+            Tạo thông báo mới
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.UpdateNotification(System.Int32,HniDashOps.API.DTOs.UpdateSystemNotificationRequest)">
+            <summary>
+            Cập nhật thông báo
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.DeleteNotification(System.Int32)">
+            <summary>
+            Xóa thông báo
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.MarkAsRead(System.Int32,HniDashOps.API.DTOs.MarkNotificationReadRequest)">
+            <summary>
+            Đánh dấu thông báo đã đọc
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.MarkAsUnread(System.Int32)">
+            <summary>
+            Đánh dấu thông báo chưa đọc
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetUnreadNotifications(System.Int32)">
+            <summary>
+            Lấy thông báo chưa đọc
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetNotificationsByType(System.String,System.Int32,System.Int32)">
+            <summary>
+            Lấy thông báo theo loại
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetNotificationsByStatus(System.String,System.Int32,System.Int32)">
+            <summary>
+            Lấy thông báo theo trạng thái
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetActiveNotifications">
+            <summary>
+            Lấy thông báo đang hoạt động
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetNotificationsByDateRange(System.DateTime,System.DateTime)">
+            <summary>
+            Lấy thông báo theo khoảng thời gian
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetHighPriorityNotifications">
+            <summary>
+            Lấy thông báo ưu tiên cao
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.UpdatePriority(System.Int32,HniDashOps.API.DTOs.UpdateNotificationPriorityRequest)">
+            <summary>
+            Cập nhật độ ưu tiên thông báo
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetNotificationsByAudience(System.String,System.Int32,System.Int32)">
+            <summary>
+            Lấy thông báo theo đối tượng
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.MarkAllAsRead(System.Int32)">
+            <summary>
+            Đánh dấu tất cả thông báo đã đọc
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.DeleteExpiredNotifications">
+            <summary>
+            Xóa thông báo hết hạn
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.GetUnreadCount(System.Int32)">
+            <summary>
+            Lấy số lượng thông báo chưa đọc
+            </summary>
+        </member>
+        <member name="M:HniDashOps.API.Controllers.SystemNotificationsController.IsNotificationActive(System.Int32)">
+            <summary>
+            Kiểm tra thông báo có đang hoạt động không
+            </summary>
+        </member>
+    </members>
+</doc>
