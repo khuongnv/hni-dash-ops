@@ -5,19 +5,17 @@
 Tạo file `.env` trong thư mục gốc của dự án với nội dung:
 
 ```env
-# Supabase Configuration
-SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_API_KEY=your-anon-key-here
+# API Configuration
+API_BASE_URL=http://localhost:64707
+NUXT_PUBLIC_API_BASE_URL=http://localhost:64707
 ```
 
-## Lấy thông tin từ Supabase
+## Cấu hình Backend API
 
-1. Đăng nhập vào [Supabase Dashboard](https://supabase.com/)
-2. Chọn project của bạn
-3. Vào **Settings** → **API**
-4. Copy các thông tin:
-   - **Project URL** → `SUPABASE_URL`
-   - **anon/public key** → `SUPABASE_API_KEY`
+1. Đảm bảo backend đang chạy trên port 64707
+2. Cấu hình các thông tin:
+   - **API Base URL** → `API_BASE_URL` (mặc định: http://localhost:64707)
+   - **Nuxt Public API Base URL** → `NUXT_PUBLIC_API_BASE_URL`
 
 ## Cấu hình Vercel
 
@@ -26,17 +24,12 @@ Khi deploy lên Vercel, thêm environment variables trong Vercel Dashboard:
 1. Vào project settings
 2. Chọn **Environment Variables**
 3. Thêm:
-   - `SUPABASE_URL` = https://your-project-id.supabase.co
-   - `SUPABASE_API_KEY` = your-anon-key-here
+   - `API_BASE_URL` = https://your-backend-api.com
+   - `NUXT_PUBLIC_API_BASE_URL` = https://your-backend-api.com
 
 ## Lưu ý
 
 - File `.env` không được commit vào git (đã có trong .gitignore)
 - Environment variables trên Vercel phải khớp với tên trong nuxt.config.ts
-- Không sử dụng service_role key cho client-side
-
-
-
-# Supabase Configuration
-SUPABASE_URL=https://tpqraghvxywsoaxmfcfs.supabase.co
-SUPABASE_API_KEY=sb_secret_xc-edfngrUhDEYjYfqTDyQ_-RJGwlKP
+- Backend API phải hỗ trợ CORS cho frontend domain
+- Đảm bảo backend đang chạy trước khi start frontend

@@ -70,7 +70,8 @@ export default defineNuxtConfig({
   // Runtime config
   runtimeConfig: {
     public: {
-      appName: 'HNI Dashboard Operations'
+      appName: 'HNI Dashboard Operations',
+      apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:64707'
     }
   },
 

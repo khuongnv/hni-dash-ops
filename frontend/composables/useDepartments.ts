@@ -1,83 +1,58 @@
 import { useErrorHandler } from './useErrorHandler'
-import { demoDepartments, Department } from '~/data/demo-departments'
 
 export interface Department {
   id: number
   code: string
   name: string
   parent_id: number | null
+  parent_name?: string
   map_id: number | null
   level: number
   note: string | null
+  order: number
+  color?: string
+  icon?: string
+  is_visible: boolean
+  type?: string
+  metadata?: string
+  is_active: boolean
   created_at: string
   updated_at: string
+  children?: Department[]
+  children_count?: number
 }
 
 export const useDepartments = () => {
   const { handleAsyncError } = useErrorHandler()
+  const { get, post, put, delete: del } = useAPI()
 
   const getDepartments = async (): Promise<Department[]> => {
     return await handleAsyncError(async () => {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 200))
-      return demoDepartments
+      return await get<Department[]>('/api/departments')
     }, 'Lấy danh sách departments')
   }
 
   const getDepartmentById = async (id: number): Promise<Department> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 100))
-      const department = demoDepartments.find(dept => dept.id === id)
-      if (!department) {
-        throw new Error('Department not found')
-      }
-      return department
+      return await get<Department>(`/api/departments/${id}`)
     }, 'Lấy thông tin department')
   }
 
   const createDepartment = async (departmentData: Partial<Department>): Promise<Department> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 300))
-      const newDepartment: Department = {
-        id: Math.max(...demoDepartments.map(d => d.id)) + 1,
-        code: departmentData.code || '',
-        name: departmentData.name || '',
-        parent_id: departmentData.parent_id || null,
-        map_id: departmentData.map_id || null,
-        level: departmentData.level || 1,
-        note: departmentData.note || null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      }
-      demoDepartments.push(newDepartment)
-      return newDepartment
+      return await post<Department>('/api/departments', departmentData)
     }, 'Tạo department')
   }
 
   const updateDepartment = async (id: number, departmentData: Partial<Department>): Promise<Department> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 300))
-      const index = demoDepartments.findIndex(dept => dept.id === id)
-      if (index === -1) {
-        throw new Error('Department not found')
-      }
-      demoDepartments[index] = {
-        ...demoDepartments[index],
-        ...departmentData,
-        updated_at: new Date().toISOString()
-      }
-      return demoDepartments[index]
+      return await put<Department>(`/api/departments/${id}`, departmentData)
     }, 'Cập nhật department')
   }
 
   const deleteDepartment = async (id: number): Promise<void> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 200))
-      const index = demoDepartments.findIndex(dept => dept.id === id)
-      if (index === -1) {
-        throw new Error('Department not found')
-      }
-      demoDepartments.splice(index, 1)
+      await del(`/api/departments/${id}`)
     }, 'Xóa department')
   }
 

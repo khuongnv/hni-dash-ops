@@ -1,6 +1,6 @@
 # Demo Data
 
-Thư mục này chứa dữ liệu demo để thay thế tạm thời cho Supabase REST API.
+Thư mục này chứa dữ liệu demo để thay thế tạm thời cho REST API.
 
 ## Các file dữ liệu demo
 
@@ -47,4 +47,4 @@ Các composables đã được cập nhật để sử dụng dữ liệu demo t
 - Tất cả dữ liệu demo đều được đánh dấu `is_public: true` để hiển thị khi chưa login
 - Các thao tác CRUD vẫn hoạt động bình thường nhưng chỉ thay đổi trong memory
 - Dữ liệu sẽ reset về trạng thái ban đầu khi reload trang
-- Để chuyển lại sang Supabase, chỉ cần thay đổi logic trong các composables
+- Để chuyển sang sử dụng API thực, chỉ cần thay đổi logic trong các composables

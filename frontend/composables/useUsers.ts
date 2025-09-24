@@ -1,5 +1,4 @@
 import { useErrorHandler } from './useErrorHandler'
-import { demoUsers, User } from '~/data/demo-users'
 
 export interface User {
   id: number
@@ -35,109 +34,39 @@ export interface UsersResponse {
 
 export const useUsers = () => {
   const { handleAsyncError } = useErrorHandler()
+  const { get, post, put, delete: del } = useAPI()
 
   const getUsers = async (page: number = 1, limit: number = 10, search: string = '', status: string = ''): Promise<UsersResponse> => {
     return await handleAsyncError(async () => {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 300))
+      const params: Record<string, any> = { page, limit }
+      if (search) params.search = search
+      if (status) params.status = status
       
-      let filteredUsers = [...demoUsers]
-      
-      // Filter by search
-      if (search) {
-        const searchLower = search.toLowerCase()
-        filteredUsers = filteredUsers.filter(user => 
-          user.full_name.toLowerCase().includes(searchLower) ||
-          user.username.toLowerCase().includes(searchLower) ||
-          user.email.toLowerCase().includes(searchLower)
-        )
-      }
-      
-      // Filter by status
-      if (status) {
-        filteredUsers = filteredUsers.filter(user => user.status === status)
-      }
-      
-      // Pagination
-      const total = filteredUsers.length
-      const totalPages = Math.ceil(total / limit)
-      const startIndex = (page - 1) * limit
-      const endIndex = startIndex + limit
-      const data = filteredUsers.slice(startIndex, endIndex)
-      
-      return {
-        data,
-        pagination: {
-          page,
-          limit,
-          total,
-          totalPages
-        }
-      }
+      return await get<UsersResponse>('/api/users', params)
     }, 'Lấy danh sách người dùng')
   }
 
   const getUserById = async (id: number): Promise<User> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 100))
-      const user = demoUsers.find(u => u.id === id)
-      if (!user) {
-        throw new Error('User not found')
-      }
-      return user
+      return await get<User>(`/api/users/${id}`)
     }, 'Lấy thông tin người dùng')
   }
 
   const createUser = async (userData: Partial<User>): Promise<User> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 400))
-      const newUser: User = {
-        id: Math.max(...demoUsers.map(u => u.id)) + 1,
-        full_name: userData.full_name || '',
-        username: userData.username || '',
-        email: userData.email || '',
-        department_id: userData.department_id || null,
-        role_id: userData.role_id || null,
-        position_id: userData.position_id || null,
-        gender_id: userData.gender_id || null,
-        dob: userData.dob || null,
-        status: userData.status || 'active',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        department: userData.department || null,
-        role: userData.role || null,
-        position: userData.position || null,
-        gender: userData.gender || null
-      }
-      demoUsers.push(newUser)
-      return newUser
+      return await post<User>('/api/users', userData)
     }, 'Tạo người dùng')
   }
 
   const updateUser = async (id: number, userData: Partial<User>): Promise<User> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 400))
-      const index = demoUsers.findIndex(u => u.id === id)
-      if (index === -1) {
-        throw new Error('User not found')
-      }
-      demoUsers[index] = {
-        ...demoUsers[index],
-        ...userData,
-        updated_at: new Date().toISOString()
-      }
-      return demoUsers[index]
+      return await put<User>(`/api/users/${id}`, userData)
     }, 'Cập nhật người dùng')
   }
 
   const deleteUser = async (id: number): Promise<void> => {
     return await handleAsyncError(async () => {
-      await new Promise(resolve => setTimeout(resolve, 200))
-      const index = demoUsers.findIndex(u => u.id === id)
-      if (index === -1) {
-        throw new Error('User not found')
-      }
-      demoUsers.splice(index, 1)
+      await del(`/api/users/${id}`)
     }, 'Xóa người dùng')
   }
 

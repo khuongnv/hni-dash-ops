@@ -433,7 +433,7 @@
                   <div class="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h5 class="font-medium text-sm">Authentication</h5>
-                    <p class="text-xs text-muted-foreground">Tích hợp sẵn với Supabase Auth</p>
+                    <p class="text-xs text-muted-foreground">Tích hợp sẵn với hệ thống xác thực</p>
                   </div>
                 </div>
               </div>
@@ -833,7 +833,7 @@ DELETE /api/system-notifications/[id]      # Xóa thông báo</code></pre>
                     <div class="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                     <div>
                       <h5 class="font-medium text-sm">Row Level Security</h5>
-                      <p class="text-xs text-muted-foreground">Bảo mật dữ liệu với Supabase RLS</p>
+                      <p class="text-xs text-muted-foreground">Bảo mật dữ liệu với Row Level Security</p>
                     </div>
                   </div>
                   <div class="flex items-start gap-2">

@@ -51,9 +51,9 @@ Dashboard nội bộ được xây dựng với Nuxt 3 và shadcn-vue cho việc
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide Vue Next
 - **TypeScript**: Hỗ trợ đầy đủ
-- **Database**: PostgreSQL (Supabase)
-- **API**: Supabase REST API + Custom API Routes
-- **Authentication**: Supabase Auth
+- **Database**: PostgreSQL
+- **API**: REST API + Custom API Routes
+- **Authentication**: Custom Auth System
 - **Charts**: Chart.js với Vue-ChartJS
 
 ## 📦 Cài đặt
@@ -74,9 +74,9 @@ npm install
 # Tạo file .env
 cp .env.example .env
 
-# Cập nhật thông tin Supabase trong .env
-SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_API_KEY=your-anon-key-here
+# Cập nhật thông tin API trong .env
+API_BASE_URL=https://your-api-endpoint.com
+API_KEY=your-api-key-here
 ```
 
 4. Chạy development server:
@@ -111,7 +111,7 @@ nuxtjs-hni-dash-ops/
 │   ├── PageHeader.vue                 # Page header component
 │   └── ErrorBoundary.vue              # Error boundary component
 ├── composables/                       # Vue composables
-│   ├── useSupabase.ts                 # Supabase client
+│   ├── useAPI.ts                      # API client
 │   ├── useSystemNotifications.ts      # System notifications logic
 │   ├── useErrorHandler.ts             # Error handling
 │   ├── useIcons.ts                    # Icon management
@@ -157,7 +157,7 @@ nuxtjs-hni-dash-ops/
 │           ├── [id].put.ts
 │           └── [id].delete.ts
 ├── plugins/
-│   ├── supabase.client.ts             # Supabase client plugin
+│   ├── api.client.ts                   # API client plugin
 │   └── suppress-warnings.client.ts    # Suppress warnings plugin
 ├── lib/
 │   └── utils.ts                       # Utility functions
@@ -272,8 +272,8 @@ npm run generate
 
 ## 🗄️ Database & API
 
-### Supabase PostgreSQL
-- **Database**: PostgreSQL được host trên Supabase
+### PostgreSQL Database
+- **Database**: PostgreSQL
 - **Bảng chính**: 
   - `menus` - quản lý menu hệ thống
   - `system_notifications` - quản lý thông báo hệ thống
@@ -302,8 +302,8 @@ DELETE /api/system-notifications/[id]      # Xóa thông báo
 
 ### Environment Variables
 ```env
-SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_API_KEY=your-anon-key-here
+API_BASE_URL=https://your-api-endpoint.com
+API_KEY=your-api-key-here
 ```
 
 ### Cấu hình Vercel Deployment
@@ -311,8 +311,8 @@ Khi deploy lên Vercel, cần thêm environment variables trong Vercel Dashboard
 
 1. Vào **Project Settings** → **Environment Variables**
 2. Thêm các biến:
-   - `SUPABASE_URL` = https://your-project-id.supabase.co
-   - `SUPABASE_API_KEY` = your-anon-key-here
+   - `API_BASE_URL` = https://your-api-endpoint.com
+   - `API_KEY` = your-api-key-here
 3. Redeploy project sau khi thêm environment variables
 
 **Lưu ý**: Không sử dụng service_role key cho client-side, chỉ dùng anon key.
@@ -344,7 +344,7 @@ npm run build
 
 ## 🔒 Security Features
 
-- **Row Level Security**: Bảo mật dữ liệu với Supabase RLS
+- **Row Level Security**: Bảo mật dữ liệu với RLS
 - **Input Validation**: Validation tất cả inputs
 - **XSS Protection**: Bảo vệ khỏi XSS attacks
 - **CSRF Protection**: Bảo vệ khỏi CSRF attacks

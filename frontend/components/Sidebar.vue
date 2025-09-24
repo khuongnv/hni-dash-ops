@@ -83,6 +83,7 @@ import { Menu, Search, X } from 'lucide-vue-next'
 import MenuItem from '~/components/ui/MenuItem.vue'
 import { useAuth } from '~/composables/useAuth'
 import { useMenus } from '~/composables/useMenus'
+import { useIcons } from '~/composables/useIcons'
 
 // Props
 const props = defineProps<{
@@ -109,10 +110,23 @@ const searchQuery = ref('')
 const debouncedSearchQuery = ref('')
 
 // Navigation items - sử dụng dữ liệu từ API
-const navigationItems = ref([])
+interface NavigationItem {
+  name: string
+  href: string
+  icon: any
+  children?: NavigationItem[]
+}
+
+const navigationItems = ref<NavigationItem[]>([])
 
 // Filter navigation items based on authentication and search
 const filteredNavigationItems = computed(() => {
+  console.log('Filtering navigation items:', {
+    isInitialized: isInitialized.value,
+    navigationItemsCount: navigationItems.value.length,
+    searchQuery: searchQuery.value
+  })
+  
   if (!isInitialized.value) {
     return []
   }
@@ -190,35 +204,54 @@ const filteredNavigationItems = computed(() => {
     }).filter(item => item !== null)
   }
   
+  console.log('Filtered items result:', items.length, 'items')
   return items
 })
 
-// Load menus from fake data
+// Load menus from API
 const loadMenus = async () => {
   try {
+    console.log('Loading menus from API...')
     const menus = await getMenus()
+    console.log('Loaded menus:', menus)
     
     // Transform menu data to navigation format
-    const activeMenus = menus.filter((menu: any) => menu.is_active)
+    const activeMenus = menus.filter((menu: any) => menu.IsActive)
+    console.log('Active menus:', activeMenus.length, 'out of', menus.length)
+    console.log('Active menus data:', activeMenus)
     
     // Build navigation tree
     const buildNavigationTree = (menus: any[], parentId: number | null = null): any[] => {
+      console.log('Building tree for parentId:', parentId, 'with', menus.length, 'menus')
       const filtered = menus
-        .filter(menu => menu.parent_id === parentId)
-        .sort((a, b) => a.order - b.order)
+        .filter(menu => menu.ParentId === parentId)
+        .sort((a, b) => a.Order - b.Order)
       
-      return filtered.map(menu => ({
-        name: menu.name,
-        href: menu.path,
-        icon: getIconComponent(menu.icon),
-        children: buildNavigationTree(menus, menu.id)
-      }))
+      console.log('Filtered menus for parentId', parentId, ':', filtered.length, 'items')
+      
+      const mappedItems = filtered.map(menu => {
+        console.log('Mapping menu:', menu.Name, 'ParentId:', menu.ParentId, 'Id:', menu.Id)
+        const children = buildNavigationTree(menus, menu.Id)
+        console.log(`Children for ${menu.Name}:`, children.length, 'items')
+        return {
+          name: menu.Name,
+          href: menu.Href || '/',
+          icon: getIconComponent(menu.Icon),
+          children: children
+        }
+      })
+      
+      console.log('Mapped items for parentId', parentId, ':', mappedItems.length, 'items')
+      return mappedItems
     }
     
     navigationItems.value = buildNavigationTree(activeMenus)
+    console.log('Navigation items built:', navigationItems.value)
+    console.log('Navigation tree structure:', JSON.stringify(navigationItems.value, null, 2))
   } catch (error) {
     console.error('Error loading menus:', error)
-    // Fallback to static data if fake data fails
+    console.log('Using fallback menu data')
+    // Fallback to static data if API fails
     navigationItems.value = [
       {
         name: 'Dashboard',
@@ -250,7 +283,7 @@ const loadMenus = async () => {
 }
 
 // Submenu state - sẽ được cập nhật động
-const openSubmenus = ref([])
+const openSubmenus = ref<string[]>([])
 
 // Toggle submenu
 const toggleSubmenu = (name: string) => {
@@ -318,7 +351,7 @@ const clearSearch = () => {
 }
 
 // Debounce search query for better performance
-let searchTimeout: NodeJS.Timeout | null = null
+let searchTimeout: ReturnType<typeof setTimeout> | null = null
 watch(searchQuery, (newQuery) => {
   if (searchTimeout) {
     clearTimeout(searchTimeout)

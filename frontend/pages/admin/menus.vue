@@ -66,22 +66,22 @@
                   Không có menu nào
                 </TableCell>
               </TableRow>
-              <TableRow v-else v-for="menu in filteredMenus" :key="menu.id" 
+              <TableRow v-else v-for="menu in filteredMenus" :key="menu.Id" 
                 :class="{
-                  'bg-primary/5 border-l-4 border-l-primary': menu.level === 1,
-                  'bg-blue-50/50 border-l-4 border-l-blue-500': menu.level === 2,
-                  'bg-green-50/50 border-l-4 border-l-green-500': menu.level === 3,
-                  'bg-orange-50/50 border-l-4 border-l-orange-500': menu.level >= 4
+                  'bg-primary/5 border-l-4 border-l-primary': menu.Level === 1,
+                  'bg-blue-50/50 border-l-4 border-l-blue-500': menu.Level === 2,
+                  'bg-green-50/50 border-l-4 border-l-green-500': menu.Level === 3,
+                  'bg-orange-50/50 border-l-4 border-l-orange-500': menu.Level >= 4
                 }"
               >
-                <TableCell class="font-medium">{{ menu.id }}</TableCell>
+                <TableCell class="font-medium">{{ menu.Id }}</TableCell>
                 <TableCell>
                   <div class="flex items-center gap-2">
                     <!-- Tree structure indicators -->
                     <div class="flex items-center">
-                      <template v-for="i in menu.level - 1" :key="i">
+                      <template v-for="i in menu.Level - 1" :key="i">
                         <div class="w-4 h-4 flex items-center justify-center">
-                          <div v-if="i === menu.level - 1" class="w-3 h-3 flex items-center justify-center">
+                          <div v-if="i === menu.Level - 1" class="w-3 h-3 flex items-center justify-center">
                             <!-- Last level indicator -->
                             <div class="w-4 h-4 border-l-2 border-b-2 border-muted-foreground/60 rounded-bl-sm"></div>
                           </div>
@@ -95,84 +95,84 @@
                     
                     <div :class="[
                       'flex items-center justify-center rounded-md',
-                      menu.level === 1 ? 'w-8 h-8 bg-primary/10 border border-primary/20' : 
-                      menu.level === 2 ? 'w-6 h-6 bg-blue-50 border border-blue-200' :
-                      menu.level === 3 ? 'w-6 h-6 bg-green-50 border border-green-200' :
+                      menu.Level === 1 ? 'w-8 h-8 bg-primary/10 border border-primary/20' : 
+                      menu.Level === 2 ? 'w-6 h-6 bg-blue-50 border border-blue-200' :
+                      menu.Level === 3 ? 'w-6 h-6 bg-green-50 border border-green-200' :
                       'w-6 h-6 bg-orange-50 border border-orange-200'
                     ]">
                       <component 
-                        :is="getIconComponent(menu.icon)" 
+                        :is="getIconComponent(menu.Icon)" 
                         :class="[
                           'w-4 h-4',
-                          menu.level === 1 ? 'text-primary' : 
-                          menu.level === 2 ? 'text-blue-600' : 
-                          menu.level === 3 ? 'text-green-600' : 'text-orange-600'
+                          menu.Level === 1 ? 'text-primary' : 
+                          menu.Level === 2 ? 'text-blue-600' : 
+                          menu.Level === 3 ? 'text-green-600' : 'text-orange-600'
                         ]" 
                       />
                     </div>
                     
                     <!-- Collapse/Expand button using ChevronRight -->
                     <button 
-                      v-if="hasChildren(menu.id)"
-                      @click="toggleMenuCollapse(menu.id)"
+                      v-if="hasChildren(menu.Id)"
+                      @click="toggleMenuCollapse(menu.Id)"
                       class="flex items-center justify-center w-4 h-4 rounded hover:bg-muted transition-colors cursor-pointer"
-                      :title="isMenuCollapsed(menu.id) ? 'Mở rộng' : 'Thu gọn'"
+                      :title="isMenuCollapsed(menu.Id) ? 'Mở rộng' : 'Thu gọn'"
                     >
                       <ChevronRight 
                         :class="[
                           'w-3 h-3 transition-transform duration-200 text-muted-foreground',
-                          isMenuCollapsed(menu.id) ? 'rotate-0' : 'rotate-90'
+                          isMenuCollapsed(menu.Id) ? 'rotate-0' : 'rotate-90'
                         ]"
                       />
                     </button>
                     <div v-else class="w-4 h-4"></div>
                     
                     <span :class="{ 
-                      'font-semibold text-foreground': menu.level === 1,
-                      'font-medium text-blue-700': menu.level === 2,
-                      'text-green-700': menu.level === 3,
-                      'text-orange-700': menu.level >= 4
+                      'font-semibold text-foreground': menu.Level === 1,
+                      'font-medium text-blue-700': menu.Level === 2,
+                      'text-green-700': menu.Level === 3,
+                      'text-orange-700': menu.Level >= 4
                     }">
-                      {{ menu.name }}
+                      {{ menu.Name }}
                     </span>
                   </div>
                 </TableCell>
                 <TableCell>
                   <code class="text-xs bg-muted px-1 rounded">
-                    {{ menu.href === '#parent' ? '#' : menu.href }}
+                    {{ menu.Href === '#parent' ? '#' : menu.Href }}
                   </code>
                 </TableCell>
                 <TableCell>
-                  <span v-if="menu.parent_id" class="text-sm text-muted-foreground">
-                    {{ getParentName(menu.parent_id) }}
+                  <span v-if="menu.ParentId" class="text-sm text-muted-foreground">
+                    {{ getParentName(menu.ParentId) }}
                   </span>
                   <span v-else class="text-sm text-muted-foreground">-</span>
                 </TableCell>
-                <TableCell>{{ menu.order }}</TableCell>
+                <TableCell>{{ menu.Order }}</TableCell>
                 <TableCell>
                   <Badge :variant="
-                    menu.level === 1 ? 'secondary' : 
-                    menu.level === 2 ? 'secondary' : 
-                    menu.level === 3 ? 'outline' : 'secondary'
+                    menu.Level === 1 ? 'secondary' : 
+                    menu.Level === 2 ? 'secondary' : 
+                    menu.Level === 3 ? 'outline' : 'secondary'
                   " :class="{
-                    'bg-red-100 text-red-800 font-medium': menu.level === 1,
-                    'bg-blue-100 text-blue-800 font-medium': menu.level === 2,
-                    'bg-green-100 text-green-800 font-medium': menu.level === 3,
-                    'bg-orange-100 text-orange-800 font-medium': menu.level >= 4
+                    'bg-red-100 text-red-800 font-medium': menu.Level === 1,
+                    'bg-blue-100 text-blue-800 font-medium': menu.Level === 2,
+                    'bg-green-100 text-green-800 font-medium': menu.Level === 3,
+                    'bg-orange-100 text-orange-800 font-medium': menu.Level >= 4
                   }">
                     <span :class="{
-                      'text-red-800': menu.level === 1,
-                      'text-blue-800': menu.level === 2,
-                      'text-green-800': menu.level === 3,
-                      'text-orange-800': menu.level >= 4
+                      'text-red-800': menu.Level === 1,
+                      'text-blue-800': menu.Level === 2,
+                      'text-green-800': menu.Level === 3,
+                      'text-orange-800': menu.Level >= 4
                     }">
-                      Cấp {{ menu.level }}
+                      Cấp {{ menu.Level }}
                     </span>
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <Badge :variant="menu.is_active ? 'default' : 'destructive'">
-                    {{ menu.is_active ? 'Hoạt động' : 'Tạm dừng' }}
+                  <Badge :variant="menu.IsActive ? 'default' : 'destructive'">
+                    {{ menu.IsActive ? 'Hoạt động' : 'Tạm dừng' }}
                   </Badge>
                 </TableCell>
                 <TableCell>
@@ -370,6 +370,9 @@ import {
   ChevronRight
 } from 'lucide-vue-next'
 
+// Import composables
+import { useMenus } from '~/composables/useMenus'
+
 // Import UI components
 import PageHeader from '~/components/PageHeader.vue'
 import Card from '~/components/ui/Card.vue'
@@ -406,14 +409,22 @@ useHead({
 
 // Types
 interface Menu {
-  id: number
-  name: string
-  href: string
-  icon: string
-  order: number
-  parent_id: number | null
-  level: number
-  is_active: boolean
+  Id: number
+  Name: string
+  Href: string
+  Icon: string
+  Order: number
+  ParentId: number | null
+  Level: number
+  IsActive: boolean
+  ParentName?: string
+  Description?: string
+  IsVisible: boolean
+  Target?: string
+  CssClass?: string
+  DataAttributes?: string
+  CreatedAt: string
+  UpdatedAt?: string
 }
 
 // Reactive data
@@ -440,7 +451,7 @@ const triggerSidebarRefresh = () => {
 
 // Helper function to check if menu has children
 const hasChildren = (menuId: number): boolean => {
-  return menus.value.some(menu => menu.parent_id === menuId)
+  return menus.value.some(menu => menu.ParentId === menuId)
 }
 
 // Helper function to toggle menu collapse
@@ -490,21 +501,21 @@ const buildTreeStructure = (menus: Menu[]) => {
   const processed = new Set<number>()
   
   // First, add all level 1 menus (root menus)
-  const rootMenus = menus.filter(menu => menu.level === 1).sort((a, b) => a.order - b.order)
+  const rootMenus = menus.filter(menu => menu.Level === 1).sort((a, b) => a.Order - b.Order)
   
   const addMenuAndChildren = (menu: Menu) => {
-    if (processed.has(menu.id)) return
+    if (processed.has(menu.Id)) return
     
     // Only add menu if no parent is collapsed
     if (!isAnyParentCollapsed(menu)) {
       result.push(menu)
-      processed.add(menu.id)
+      processed.add(menu.Id)
       
       // Only add children if current menu is not collapsed
-      if (!isMenuCollapsed(menu.id)) {
+      if (!isMenuCollapsed(menu.Id)) {
         const children = menus
-          .filter(child => child.parent_id === menu.id)
-          .sort((a, b) => a.order - b.order)
+          .filter(child => child.ParentId === menu.Id)
+          .sort((a, b) => a.Order - b.Order)
         
         children.forEach(child => addMenuAndChildren(child))
       }
@@ -516,7 +527,7 @@ const buildTreeStructure = (menus: Menu[]) => {
   
   // Add any remaining menus that weren't processed (orphaned menus)
   menus.forEach(menu => {
-    if (!processed.has(menu.id) && !isAnyParentCollapsed(menu)) {
+    if (!processed.has(menu.Id) && !isAnyParentCollapsed(menu)) {
       result.push(menu)
     }
   })
@@ -536,13 +547,13 @@ const removeDiacritics = (str: string): string => {
 // Helper function to get all parent menus
 const getAllParentMenus = (menu: Menu): Menu[] => {
   const parents: Menu[] = []
-  let currentParent = menu.parent_id
+  let currentParent = menu.ParentId
   
   while (currentParent) {
-    const parent = menus.value.find(m => m.id === currentParent)
+    const parent = menus.value.find(m => m.Id === currentParent)
     if (parent) {
       parents.unshift(parent) // Add to beginning to maintain order
-      currentParent = parent.parent_id
+      currentParent = parent.ParentId
     } else {
       break
     }
@@ -561,9 +572,9 @@ const filteredMenus = computed(() => {
     const searchTermNoDiacritics = removeDiacritics(searchTerm)
     
     const matchingMenus = result.filter(menu => {
-      const menuName = menu.name.toLowerCase()
+      const menuName = menu.Name.toLowerCase()
       const menuNameNoDiacritics = removeDiacritics(menuName)
-      const menuHref = menu.href.toLowerCase()
+      const menuHref = menu.Href.toLowerCase()
       const menuHrefNoDiacritics = removeDiacritics(menuHref)
       
       return menuName.includes(searchTerm) ||
@@ -577,15 +588,15 @@ const filteredMenus = computed(() => {
     
     matchingMenus.forEach(menu => {
       // Add the matching menu itself
-      allMenusToShow.add(menu.id)
+      allMenusToShow.add(menu.Id)
       
       // Add all its parent menus
       const parents = getAllParentMenus(menu)
-      parents.forEach(parent => allMenusToShow.add(parent.id))
+      parents.forEach(parent => allMenusToShow.add(parent.Id))
     })
     
     // Filter to only show menus that should be displayed
-    result = result.filter(menu => allMenusToShow.has(menu.id))
+    result = result.filter(menu => allMenusToShow.has(menu.Id))
   }
   
   // Build tree structure for proper hierarchy display
@@ -593,23 +604,22 @@ const filteredMenus = computed(() => {
 })
 
 const parentMenus = computed(() => {
-  return menus.value.filter(menu => menu.level < 4)
+  return menus.value.filter(menu => menu.Level < 4)
 })
 
 // Methods
 
 const getParentName = (parentId) => {
-  const parent = menus.value.find(m => m.id === parentId)
-  return parent ? parent.name : 'Không tìm thấy'
+  const parent = menus.value.find(m => m.Id === parentId)
+  return parent ? parent.Name : 'Không tìm thấy'
 }
 
 const loadMenus = async () => {
   try {
     loading.value = true
-    const response = await $fetch('/api/menus')
-    if (response.success) {
-      menus.value = response.data || []
-    }
+    const { getMenus } = useMenus()
+    const menuData = await getMenus()
+    menus.value = menuData || []
   } catch (error) {
     console.error('Error loading menus:', error)
   } finally {

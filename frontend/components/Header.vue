@@ -48,16 +48,10 @@
                       {{ getCurrentUser()?.email }}
                     </p>
                     <div class="flex flex-wrap gap-1 mt-1">
-                      <span v-if="getUserRole()" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ getUserRole() }}
-                      </span>
-                      <span v-if="getUserPosition()" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                        {{ getUserPosition() }}
+                      <span v-if="getRole()" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                        {{ getRole() }}
                       </span>
                     </div>
-                    <span v-if="getUserDepartment()" class="text-xs text-gray-500">
-                      {{ getUserDepartment() }}
-                    </span>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -137,9 +131,7 @@ const {
   isInitialized,
   getCurrentUser, 
   getUserDisplayName, 
-  getUserRole, 
-  getUserDepartment, 
-  getUserPosition, 
+  getRole, 
   logout 
 } = useAuth()
 
@@ -156,7 +148,11 @@ const getUserInitials = () => {
   const user = getCurrentUser()
   if (!user) return 'U'
   
-  const name = user.full_name || user.username
+  // Use firstName and lastName if available, otherwise use username
+  const name = (user.firstName && user.lastName) 
+    ? `${user.firstName} ${user.lastName}` 
+    : user.username || 'User'
+  
   const words = name.split(' ')
   if (words.length >= 2) {
     return (words[0][0] + words[words.length - 1][0]).toUpperCase()

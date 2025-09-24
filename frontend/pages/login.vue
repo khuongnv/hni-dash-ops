@@ -80,7 +80,7 @@
 
         <div class="text-center">
           <p class="text-sm text-gray-600">
-            Demo: Sử dụng username/password từ danh sách người dùng
+            Sử dụng tài khoản đã được tạo trong hệ thống
           </p>
         </div>
       </form>
@@ -129,9 +129,9 @@ const handleLogin = async () => {
     } else {
       errorMessage.value = 'Tên đăng nhập hoặc mật khẩu không đúng'
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login error:', error)
-    errorMessage.value = 'Có lỗi xảy ra khi đăng nhập'
+    errorMessage.value = error.message || 'Có lỗi xảy ra khi đăng nhập'
   } finally {
     loading.value = false
   }

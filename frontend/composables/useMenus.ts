@@ -1,30 +1,53 @@
-import { demoMenus, Menu } from '~/data/demo-menus'
+export interface Menu {
+  id: number
+  name: string
+  href: string
+  icon: string
+  order: number
+  parent_id: number | null
+  parent_name?: string
+  level: number
+  description?: string
+  is_visible: boolean
+  target?: string
+  css_class?: string
+  data_attributes?: string
+  is_active: boolean
+  created_at: string
+  updated_at: string
+  children?: Menu[]
+}
 
 export const useMenus = () => {
+  const { get } = useAPI()
+
   const getMenus = async (): Promise<Menu[]> => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 100))
-    return demoMenus
+    return await get<Menu[]>('/api/menus')
   }
 
   const getMenuById = async (id: number): Promise<Menu | null> => {
-    await new Promise(resolve => setTimeout(resolve, 50))
-    return demoMenus.find(menu => menu.id === id) || null
+    try {
+      return await get<Menu>(`/api/menus/${id}`)
+    } catch (error) {
+      console.error('Error fetching menu:', error)
+      return null
+    }
   }
 
   const getPublicMenus = async (): Promise<Menu[]> => {
-    await new Promise(resolve => setTimeout(resolve, 100))
-    return demoMenus.filter(menu => menu.is_public)
+    return await get<Menu[]>('/api/menus/navigation')
   }
 
   const getActiveMenus = async (): Promise<Menu[]> => {
-    await new Promise(resolve => setTimeout(resolve, 100))
-    return demoMenus.filter(menu => menu.is_active)
+    const menus = await getMenus()
+    return menus.filter(menu => menu.is_active)
   }
 
   const getMenusByParent = async (parentId: number | null): Promise<Menu[]> => {
-    await new Promise(resolve => setTimeout(resolve, 50))
-    return demoMenus.filter(menu => menu.parent_id === parentId)
+    if (parentId === null) {
+      return await get<Menu[]>('/api/menus/root')
+    }
+    return await get<Menu[]>(`/api/menus/parent/${parentId}/children`)
   }
 
   const buildMenuTree = (menus: Menu[]): Menu[] => {
