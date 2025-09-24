@@ -1,0 +1,1 @@
+import{e as a,n as o}from"#entry";import"./CXrpKCn2.js";const n=a(e=>{if(!["/","/main/dashboard","/main/about","/login","/auth/sso-callback","/auth/sso-error","/404"].some(t=>t==="/"?e.path==="/":e.path.startsWith(t))&&!localStorage.getItem("auth_user"))return o("/login")});export{n as default};
