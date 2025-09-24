@@ -1,0 +1,1 @@
+const a=()=>{const o=(r,n)=>{const e=r?.message||r?.toString()||"Unknown error",t=n?`[${n}]`:"";return console.error(`${t} ${e}`,r),{message:e,context:t,timestamp:new Date().toISOString()}};return{handleError:o,handleAsyncError:async(r,n,e)=>{try{return await r()}catch(t){return o(t,n),e||null}}}};export{a as u};

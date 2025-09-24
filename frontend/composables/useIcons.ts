@@ -74,7 +74,13 @@ export const useIcons = () => {
     RotateCcw: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.RotateCcw }))),
     Save: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Save }))),
     Loader: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Loader }))),
-    Loader2: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Loader2 })))
+    Loader2: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Loader2 }))),
+    // Additional icons for backend compatibility
+    Tags: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Tags }))),
+    Database: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Database }))),
+    GitBranch: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.GitBranch }))),
+    Cog: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Cog }))),
+    Smartphone: defineAsyncComponent(() => import('lucide-vue-next').then(m => ({ default: m.Smartphone })))
   }
 
   // Get icon component by name
